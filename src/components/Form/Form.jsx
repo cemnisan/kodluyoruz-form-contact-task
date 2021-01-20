@@ -20,13 +20,11 @@ function Form(props){
     const textInput = React.useRef()
 
     const [form,setForm] = React.useState(Data)
-    const [isFalse,setFalse] = React.useState(false)
 
     const formsAdded = form.filter((item)=> item.name !== "").map((item,index) =>{
         return(
             <FormContainer 
             deleteFunc={deleteForm} 
-            updateFunct = {updateForm}
             values={item} 
             key={index} 
             item={item}>
@@ -63,20 +61,10 @@ function Form(props){
         setForm(form.filter(forms => id !== forms.id))
     }
 
-    function updateForm(id,name,lastName,mail,text){
-        nameInput.current.value = name
-        lastNameInput.current.value = lastName
-        emailInput.current.value = mail
-        textInput.current.value = text
-
-        setFalse(!isFalse)
-
-    }
-
     return(
         <>  
             
-            <Forms onSubmit={isFalse ? updateForm : handleClick}>
+            <Forms onSubmit={handleClick}>
                 <Forms.Group controlId="formBasicName">
                     <Forms.Label>Name</Forms.Label>
                     <Forms.Control ref={nameInput} placeholder="Name"/>
@@ -100,9 +88,8 @@ function Form(props){
                     <Forms.Control ref={textInput} as="textarea" rows={3}></Forms.Control>
                 </Forms.Group>
 
-                {isFalse ? 
-                <Button onClick={updateForm} className="mx-2" variant="primary" type="submit">Düzenle</Button> : 
-                <Button onClick={handleClick} variant="primary" type="submit">Submit</Button>}
+                
+                <Button onClick={handleClick} className="mx-2" variant="primary" type="submit">Ekle</Button>
             </Forms>
             {formsAdded}
         </>
